@@ -1,0 +1,60 @@
+<Widget>
+    <Kind>21</Kind>
+    <Name>VOLUME</Name>
+    <Value>0.826794326</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>ATTACK</Name>
+    <Value>0.771377921</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>DECAY</Name>
+    <Value>0.807929039</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>SUSTAIN</Name>
+    <Value>0.327979118</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>RELEASE</Name>
+    <Value>0.895124555</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>sinewave</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>coswave</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>saw</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>triangle</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>square</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>pulse</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>noise</Name>
+    <Value>0</Value>
+</Widget>
