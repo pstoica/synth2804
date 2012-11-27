@@ -26,27 +26,22 @@ class Synth2804 : public ofBaseApp {
 		void audioOut(float * input, int bufferSize, int nChannels);
 		void midiReceived(double deltatime, std::vector<unsigned char> *message, void *userData);
 
-		void exit(); 
-void guiEvent(ofxUIEventArgs &e);
+		void exit();
+        void guiEvent(ofxUIEventArgs &e);
 
 		ofSoundStream soundStream;
-		ofxUICanvas *gui;
+		std::unique_ptr<ofxUIScrollableCanvas> gui;
 
-		float 	pan;
 		int		sampleRate;
-		bool 	bNoise;
 		float 	volume;
-
-		vector <float> lAudio;
-		vector <float> rAudio;
 
 		//------------------- maximilian
 
 		/*Synth2804() : adsrEnv{1,5,0.125,100,0.125,200,0,1000}, notes(0), maxVoices(16), polyphonic(true), mix(0), voice() { };*/
 		SynthSettings settings;
+		vector<Voice> voices;
 		int notes;
 		double mix;
-		vector<Voice> voices;
-		
+
 		maxiOsc test1;
 };

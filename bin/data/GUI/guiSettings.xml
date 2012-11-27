@@ -1,27 +1,32 @@
 <Widget>
     <Kind>21</Kind>
     <Name>VOLUME</Name>
-    <Value>0.826794326</Value>
+    <Value>0.753978074</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>POLYPHONIC</Name>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>21</Kind>
     <Name>ATTACK</Name>
-    <Value>0.771377921</Value>
+    <Value>0.001000000</Value>
 </Widget>
 <Widget>
     <Kind>21</Kind>
     <Name>DECAY</Name>
-    <Value>0.807929039</Value>
+    <Value>0.999995172</Value>
 </Widget>
 <Widget>
     <Kind>21</Kind>
     <Name>SUSTAIN</Name>
-    <Value>0.327979118</Value>
+    <Value>0.243637189</Value>
 </Widget>
 <Widget>
     <Kind>21</Kind>
     <Name>RELEASE</Name>
-    <Value>0.895124555</Value>
+    <Value>0.999942064</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -57,4 +62,179 @@
     <Kind>17</Kind>
     <Name>noise</Name>
     <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>OSC1 DETUNE</Name>
+    <Value>1.000122070</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>OSC1 VOL</Name>
+    <Value>0.145293847</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>OSC1 PW</Name>
+    <Value>0.250000000</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>sinewave</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>coswave</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>saw</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>triangle</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>square</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>pulse</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>noise</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>OSC2 DETUNE</Name>
+    <Value>1200.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>OSC2 VOL</Name>
+    <Value>0.791184664</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>OSC2 PW</Name>
+    <Value>0.374999821</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>CUTOFF</Name>
+    <Value>0.130485922</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>lopass</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>hipass</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>none</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>sinewave</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>coswave</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>saw</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>triangle</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>square</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>pulse</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>noise</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>LFO1 FREQ</Name>
+    <Value>1.850000024</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>LFO1 DEPTH</Name>
+    <Value>0.025000000</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>sinewave</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>coswave</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>saw</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>triangle</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>square</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>pulse</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>noise</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>LFO2 FREQ</Name>
+    <Value>1.940000057</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>LFO2 DEPTH</Name>
+    <Value>0.000000000</Value>
 </Widget>

@@ -30,6 +30,12 @@
 		<Unit filename="config.make">
 			<Option virtualFolder="build config/" />
 		</Unit>
+		<Unit filename="src/RtMidi.cpp">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/RtMidi.h">
+			<Option virtualFolder="src/" />
+		</Unit>
 		<Unit filename="src/Synth2804.cpp">
 			<Option virtualFolder="src/" />
 		</Unit>

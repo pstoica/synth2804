@@ -13,7 +13,7 @@ void midiReceived(double deltatime, std::vector<unsigned char> *message, void *u
 int main( ){
 	synth = new Synth2804;
     ofAppGlutWindow window;
-	ofSetupOpenGL(&window, 1024,768, OF_WINDOW);			// <-------- setup the GL context
+	ofSetupOpenGL(&window, 450,600, OF_WINDOW);			// <-------- setup the GL context
 	midiIn.openVirtualPort("ofxMidiIn Input");
 	midiIn.setCallback(&midiReceived);
 	midiIn.ignoreTypes(false, false, false);

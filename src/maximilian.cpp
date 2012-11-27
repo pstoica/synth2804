@@ -1081,8 +1081,12 @@ double maxiEnv::adsr(double input, double attack, double decay, double sustain, 
 			holdphase=1;
 		}
 	}
+
+	if (holdphase) {
+		output = input * amplitude;
+	}
 	
-	if (holdcount<holdtime && holdphase==1) {
+	/*if (holdcount<holdtime && holdphase==1) {
 		output=input*amplitude;
 		holdcount++;
 	}
@@ -1094,7 +1098,7 @@ double maxiEnv::adsr(double input, double attack, double decay, double sustain, 
 	if (holdcount==holdtime && trigger!=1) {
 		holdphase=0;
 		releasephase=1;
-	}
+	}*/
 	
 	if (releasephase==1 && amplitude>0.) {
 		output=input*(amplitude*=release);

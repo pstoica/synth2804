@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="config.make" open="1" top="0" tabpos="4">
-		<Cursor position="450" topLine="9" />
+		<Cursor position="487" topLine="0" />
 	</File>
-	<File name="src/Synth2804.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="2742" topLine="90" />
+	<File name="src/Synth2804.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="8074" topLine="205" />
 	</File>
 	<File name="src/Synth2804.h" open="1" top="0" tabpos="1">
-		<Cursor position="875" topLine="0" />
+		<Cursor position="825" topLine="8" />
+	</File>
+	<File name="src/Voice.h" open="1" top="1" tabpos="5">
+		<Cursor position="2246" topLine="61" />
 	</File>
 	<File name="src/main.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="160" topLine="0" />
+		<Cursor position="711" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
