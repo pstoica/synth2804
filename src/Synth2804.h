@@ -4,6 +4,7 @@
 #include "ofxUI.h"
 #include "RtMidi.h"
 #include "Voice.h"
+#include "MidiMessage.h"
 #include <queue>
 
 class Synth2804 : public ofBaseApp {
@@ -28,6 +29,8 @@ class Synth2804 : public ofBaseApp {
 
 		void exit();
         void guiEvent(ofxUIEventArgs &e);
+
+        float convertMidiValue(float num, float newMin, float newMax);
 
 		ofSoundStream soundStream;
 		std::unique_ptr<ofxUIScrollableCanvas> gui;

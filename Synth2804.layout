@@ -4,16 +4,25 @@
 	<File name="config.make" open="1" top="0" tabpos="4">
 		<Cursor position="487" topLine="0" />
 	</File>
+	<File name="src/MidiMessage.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="3119" topLine="77" />
+	</File>
+	<File name="src/MidiMessage.h" open="1" top="0" tabpos="7">
+		<Cursor position="441" topLine="0" />
+	</File>
 	<File name="src/Synth2804.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="8074" topLine="205" />
+		<Cursor position="5354" topLine="103" />
 	</File>
 	<File name="src/Synth2804.h" open="1" top="0" tabpos="1">
-		<Cursor position="825" topLine="8" />
+		<Cursor position="825" topLine="0" />
+	</File>
+	<File name="src/Voice.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="18" topLine="0" />
 	</File>
 	<File name="src/Voice.h" open="1" top="1" tabpos="5">
-		<Cursor position="2246" topLine="61" />
+		<Cursor position="1357" topLine="52" />
 	</File>
 	<File name="src/main.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="711" topLine="0" />
+		<Cursor position="289" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

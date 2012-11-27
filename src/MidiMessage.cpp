@@ -1,16 +1,5 @@
 #include "MidiMessage.h"
-
-// -----------------------------------------------------------------------------
-MidiMessage::MidiMessage() {
-	clear();
-}
-
-// -----------------------------------------------------------------------------
-MidiMessage::MidiMessage(std::vector<unsigned char>* rawBytes) {
-	clear();
-	for(unsigned int i = 0; i < rawBytes->size(); ++i)
-		bytes.push_back(rawBytes->at(i));
-}
+#include <iostream>
 
 // -----------------------------------------------------------------------------
 MidiMessage::MidiMessage(const MidiMessage& from) {
@@ -66,6 +55,7 @@ void MidiMessage::clear() {
 // -----------------------------------------------------------------------------
 std::string MidiMessage::toString() {
 	std::stringstream stream;
+	stream << (int) bytes[0] << std::endl;
 	stream << portName << ": " << getStatusString(status) << " "
 		   << channel << " [ ";
 	for(unsigned int i = 0; i < bytes.size(); ++i) {
@@ -120,5 +110,45 @@ std::string MidiMessage::getStatusString(MidiStatus status) {
 			return "System Reset";
 		default:
 			return "Unknown";
+	}
+}
+
+// -----------------------------------------------------------------------------
+void MidiMessage::makeFrom(double deltatime, std::vector<unsigned char>* message) {
+	clear();
+	for(unsigned int i = 0; i < message->size(); ++i)
+		bytes.push_back(message->at(i));
+
+	status = (MidiStatus) (message->at(0) & 0xF0);
+	channel = (int) (message->at(0) & 0x0F)+1;
+
+	deltatime = deltatime;// * 1000; // convert s to ms
+	portNum = portNum;
+	portName = portName;
+
+	switch(status) {
+		case MIDI_NOTE_ON :
+		case MIDI_NOTE_OFF:
+			pitch = (int) message->at(1);
+			velocity = (int) message->at(2);
+			break;
+		case MIDI_CONTROL_CHANGE:
+			control = (int) message->at(1);
+			value = (int) message->at(2);
+			break;
+		case MIDI_PROGRAM_CHANGE:
+		case MIDI_AFTERTOUCH:
+			value = (int) message->at(1);
+			break;
+		case MIDI_PITCH_BEND:
+			value = (int) (message->at(2) << 7) +
+								(int) message->at(1); // msb + lsb
+			break;
+		case MIDI_POLY_AFTERTOUCH:
+			pitch = (int) message->at(1);
+			value = (int) message->at(2);
+			break;
+		default:
+			break;
 	}
 }
