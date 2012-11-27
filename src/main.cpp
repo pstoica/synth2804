@@ -4,13 +4,13 @@
 //========================================================================
 
 Synth2804 *synth;
-RtMidiIn midiIn;
 
 void midiReceived(double deltatime, std::vector<unsigned char> *message, void *userData) {
 	synth->midiReceived(deltatime, message, userData);
 }
 
 int main( ){
+	RtMidiIn midiIn;
 	synth = new Synth2804;
     ofAppGlutWindow window;
 	ofSetupOpenGL(&window, 450,600, OF_WINDOW);			// <-------- setup the GL context
