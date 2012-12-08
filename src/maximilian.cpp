@@ -204,24 +204,28 @@ double maxiOsc::triangle(double frequency) {
 	
 } 
 
-double maxiOsc::play(std::string fn, double frequency, double duty) {
-	if (fn == "sinewave") {
+double maxiOsc::play(Wave fn, double frequency, double duty) {
+	switch (fn) {
+	case Wave::SINE:
 		return sinewave(frequency);
-	} else if (fn == "coswave") {
-		return coswave(frequency);
-	} else if (fn == "saw") {
-		return saw(frequency);
-	} else if (fn == "triangle") {
+		break;
+	case Wave::TRIANGLE:
 		return triangle(frequency);
-	} else if (fn == "square") {
+		break;
+	case Wave::SAW:
+		return saw(frequency);
+		break;
+	case Wave::SQUARE:
 		return square(frequency);
-	} else if (fn == "pulse") {
+		break;
+	case Wave::PULSE:
 		return pulse(frequency, duty);
-	} else if (fn == "noise") {
+		break;
+	case Wave::NOISE:
+	default:
 		return noise();
+		break;
 	}
-
-	return sinewave(frequency);
 }
 
 double maxiEnvelope::line(int numberofsegments,double segments[1000]) {

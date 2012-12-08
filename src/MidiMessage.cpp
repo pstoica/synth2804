@@ -2,39 +2,31 @@
 #include <iostream>
 
 // -----------------------------------------------------------------------------
-MidiMessage::MidiMessage(const MidiMessage& from) {
-	status = from.status;
-	channel = from.channel;
-	pitch = from.pitch;
-	velocity = from.velocity;
-	control = from.control;
-	value = from.value;
-	bytes = from.bytes;
-	deltatime = from.deltatime;
-	portNum = from.portNum;
-	portName = from.portName;
+MidiMessage::MidiMessage(const MidiMessage& from) :
+	status(from.status), channel(from.channel), pitch(from.pitch),
+	velocity(from.velocity), control(from.control), value(from.value),
+	bytes(from.bytes), deltatime(from.deltatime), portNum(from.portNum),
+	portName(from.portName) { }
 
-	bytes.clear();
-	for(unsigned int i = 0; i < from.bytes.size(); ++i)
-		bytes.push_back(from.bytes[i]);
+void MidiMessage::swap(MidiMessage &from) {
+	std::swap(status, from.status);
+	std::swap(channel, from.channel);
+	std::swap(pitch, from.pitch);
+	std::swap(velocity, from.velocity);
+	std::swap(control, from.control);
+	std::swap(value, from.value);
+	std::swap(bytes, from.bytes);
+	std::swap(deltatime, from.deltatime);
+	std::swap(portNum, from.portNum);
+	std::swap(portName, from.portName);
+	bytes.swap(from.bytes);
 }
 
 // -----------------------------------------------------------------------------
 MidiMessage& MidiMessage::operator=(const MidiMessage& from) {
-	status = from.status;
-	channel = from.channel;
-	pitch = from.pitch;
-	velocity = from.velocity;
-	control = from.control;
-	value = from.value;
-	bytes = from.bytes;
-	deltatime = from.deltatime;
-	portNum = from.portNum;
-	portName = from.portName;
+	MidiMessage temp(from);
+	this->swap(temp);
 
-	bytes.clear();
-	for(unsigned int i = 0; i < from.bytes.size(); ++i)
-		bytes.push_back(from.bytes[i]);
 	return *this;
 }
 
@@ -113,42 +105,45 @@ std::string MidiMessage::getStatusString(MidiStatus status) {
 	}
 }
 
+//static MidiMessage *makeFrom(double deltatime, std::vector<unsigned char>* message);
+
 // -----------------------------------------------------------------------------
-void MidiMessage::makeFrom(double deltatime, std::vector<unsigned char>* message) {
-	clear();
+MidiMessage* MidiMessage::makeFrom(double deltatime, std::vector<unsigned char>* message) {
+	MidiMessage *temp = new MidiMessage;
+
 	for(unsigned int i = 0; i < message->size(); ++i)
-		bytes.push_back(message->at(i));
+		temp->bytes.push_back(message->at(i));
 
-	status = (MidiStatus) (message->at(0) & 0xF0);
-	channel = (int) (message->at(0) & 0x0F)+1;
+	temp->status = (MidiStatus) (message->at(0) & 0xF0);
+	temp->channel = (int) (message->at(0) & 0x0F)+1;
 
-	deltatime = deltatime;// * 1000; // convert s to ms
-	portNum = portNum;
-	portName = portName;
+	temp->deltatime = deltatime; // * 1000; // convert s to ms
 
-	switch(status) {
+	switch(temp->status) {
 		case MIDI_NOTE_ON :
 		case MIDI_NOTE_OFF:
-			pitch = (int) message->at(1);
-			velocity = (int) message->at(2);
+			temp->pitch = (int) message->at(1);
+			temp->velocity = (int) message->at(2);
 			break;
 		case MIDI_CONTROL_CHANGE:
-			control = (int) message->at(1);
-			value = (int) message->at(2);
+			temp->control = (int) message->at(1);
+			temp->value = (int) message->at(2);
 			break;
 		case MIDI_PROGRAM_CHANGE:
 		case MIDI_AFTERTOUCH:
-			value = (int) message->at(1);
+			temp->value = (int) message->at(1);
 			break;
 		case MIDI_PITCH_BEND:
-			value = (int) (message->at(2) << 7) +
+			temp->value = (int) (message->at(2) << 7) +
 								(int) message->at(1); // msb + lsb
 			break;
 		case MIDI_POLY_AFTERTOUCH:
-			pitch = (int) message->at(1);
-			value = (int) message->at(2);
+			temp->pitch = (int) message->at(1);
+			temp->value = (int) message->at(2);
 			break;
 		default:
 			break;
 	}
+
+	return temp;
 }

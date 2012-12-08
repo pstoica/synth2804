@@ -1,7 +1,7 @@
 #include "Synth2804.h"
 
 //--------------------------------------------------------------
-void Synth2804::setup(){
+void Synth2804::setup() {
 	ofEnableSmoothing();
 	ofSetVerticalSync(true);
 	ofBackground(209, 36, 43);
@@ -12,7 +12,7 @@ void Synth2804::setup(){
 	volume				= 1.0f;
 
 	vector<std::string> waveforms = {
-		"sinewave",
+		"sine",
 		"saw",
 		"triangle",
 		"square",
@@ -21,9 +21,9 @@ void Synth2804::setup(){
 	};
 
 	vector<std::string> filters = {
+		"none",
 		"lopass",
 		"hipass",
-		"none"
 	};
 
 	//soundStream.listDevices();
@@ -43,6 +43,7 @@ void Synth2804::setup(){
 	gui->setScrollAreaToScreen();
 	gui->setScrollableDirections(false, true);
 
+	// ofxGui seems to use the primitive idea of strings for identifying nodes.. oh well
 	gui->addWidgetDown(new ofxUILabel("Synth2804", OFX_UI_FONT_LARGE));
 	gui->addWidgetDown(new ofxUIRotarySlider(50,0.0,1.0,&volume,"VOLUME"));
 	gui->addWidgetRight(new ofxUIToggle("POLYPHONIC", &settings.polyphonic, 50, 50));
@@ -156,60 +157,65 @@ void Synth2804::dragEvent(ofDragInfo dragInfo){
 }
 
 void Synth2804::midiReceived(double deltatime, std::vector<unsigned char> *message, void *userData) {
-	MidiMessage midiData;
-	midiData.makeFrom(deltatime, message);
-	std::cout << midiData.toString() << std::endl;
+	std::unique_ptr<MidiMessage> midiData = std::unique_ptr<MidiMessage>(MidiMessage::makeFrom(deltatime, message));
+	std::cout << midiData->toString() << std::endl;
 
-	if (midiData.status == MIDI_NOTE_ON) {
+	switch (midiData->status) {
+	case MIDI_NOTE_ON:
 		if (settings.polyphonic) {
 			auto voice = find_if (voices.begin(), voices.end(), [&midiData](Voice &v) {
-				return v.pitch == midiData.pitch;
+				return v.pitch == midiData->pitch;
 			});
 
 			if (voice != voices.end()) {
-				voice->noteOn(midiData.pitch, midiData.velocity);
+				voice->noteOn(midiData->pitch, midiData->velocity);
 			} else {
-				min_element(voices.begin(), voices.end())->noteOn(midiData.pitch, midiData.velocity);
+				min_element(voices.begin(), voices.end())->noteOn(midiData->pitch, midiData->velocity);
 			}
 		} else {
-			voices[0].noteOn(midiData.pitch, midiData.velocity);
+			voices[0].noteOn(midiData->pitch, midiData->velocity);
 		}
 
 		notes++;
-	} else if (midiData.status == MIDI_NOTE_OFF) {
-		notes = max(0, notes - 1);
+		break;
+	case MIDI_NOTE_OFF:
+		{
+			notes = max(0, notes - 1);
 
-		auto voice = find_if (voices.begin(), voices.end(), [&midiData](Voice &v) {
-			return v.pitch == midiData.pitch;
-		});
-		voice->noteOff(notes);
-	} else if (midiData.status == MIDI_CONTROL_CHANGE) {
-		switch (midiData.control) {
-		case 0x1:
-			settings.attack = convertMidiValue(midiData.value, 0.0000000001, 0.001);
-			break;
-		case 0x2:
-			settings.decay = convertMidiValue(midiData.value, 0.9999, 1.0);
-			break;
-		case 0x3:
-			settings.sustain = convertMidiValue(midiData.value, 0, 1);
-			break;
-		case 0x4:
-			settings.release = convertMidiValue(midiData.value, 0.999,1.0);
-			break;
-		case 0x5:
-			volume = convertMidiValue(midiData.value, 0, 1);
-			break;
-		case 0x6:
-			settings.OSC1volume = convertMidiValue(midiData.value, 0, 1);
-			break;
-		case 0x7:
-			settings.OSC2volume = convertMidiValue(midiData.value, 0, 1);
-			break;
-		case 0x8:
-			settings.cutoff = convertMidiValue(midiData.value, 0, 1);
+			auto voice = find_if (voices.begin(), voices.end(), [&midiData](Voice &v) {
+				return v.pitch == midiData->pitch;
+			});
+			voice->noteOff(notes);
 			break;
 		}
+	case MIDI_CONTROL_CHANGE:
+		switch (midiData->control) {
+		case 0x1: // attack
+			settings.attack = convertMidiValue(midiData->value, 0.0000000001, 0.001);
+			break;
+		case 0x2: // decay
+			settings.decay = convertMidiValue(midiData->value, 0.9999, 1.0);
+			break;
+		case 0x3: // sustain
+			settings.sustain = convertMidiValue(midiData->value, 0, 1);
+			break;
+		case 0x4: // release
+			settings.release = convertMidiValue(midiData->value, 0.999,1.0);
+			break;
+		case 0x5: // volume
+			volume = convertMidiValue(midiData->value, 0, 1);
+			break;
+		case 0x6: // osc1 volume
+			settings.OSC1volume = convertMidiValue(midiData->value, 0, 1);
+			break;
+		case 0x7: // osc2 volume
+			settings.OSC2volume = convertMidiValue(midiData->value, 0, 1);
+			break;
+		case 0x8: // cutoff
+			settings.cutoff = convertMidiValue(midiData->value, 0, 1);
+			break;
+		}
+		break;
 	}
 }
 
@@ -218,39 +224,44 @@ void Synth2804::exit() {
 }
 
 void Synth2804::guiEvent(ofxUIEventArgs &e) {
+	std::map<std::string, Wave> waveforms = { { "sine", Wave::SINE }, { "saw", Wave::SAW }, { "triangle", Wave::TRIANGLE },
+		{ "square", Wave::SQUARE }, { "pulse", Wave::PULSE }, { "noise", Wave::NOISE } };
+	// mainly we're editing fields based on dropdown settings
 	if (e.widget->getName() == "OSC1 WAVE") {
 		ofxUIDropDownList *list = (ofxUIDropDownList *) e.widget;
 		vector<ofxUIWidget *> &selected = list->getSelected();
 		for(int i = 0; i < selected.size(); ++i) {
-			settings.OSC1wave = selected[i]->getName();
+			settings.OSC1wave = waveforms[selected[i]->getName()];
 		}
 	} else if (e.widget->getName() == "OSC2 WAVE") {
 		ofxUIDropDownList *list = (ofxUIDropDownList *) e.widget;
 		vector<ofxUIWidget *> &selected = list->getSelected();
 		for(int i = 0; i < selected.size(); ++i) {
-			settings.OSC2wave = selected[i]->getName();
+			settings.OSC2wave = waveforms[selected[i]->getName()];
 		}
 	} else if (e.widget->getName() == "LFO1 WAVE") {
 		ofxUIDropDownList *list = (ofxUIDropDownList *) e.widget;
 		vector<ofxUIWidget *> &selected = list->getSelected();
 		for(int i = 0; i < selected.size(); ++i) {
-			settings.LFO1wave = selected[i]->getName();
+			settings.LFO1wave = waveforms[selected[i]->getName()];
 		}
 	} else if (e.widget->getName() == "LFO2 WAVE") {
 		ofxUIDropDownList *list = (ofxUIDropDownList *) e.widget;
 		vector<ofxUIWidget *> &selected = list->getSelected();
 		for(int i = 0; i < selected.size(); ++i) {
-			settings.LFO2wave = selected[i]->getName();
+			settings.LFO2wave = waveforms[selected[i]->getName()];
 		}
 	} else if (e.widget->getName() == "lopass" || e.widget->getName() == "hipass" || e.widget->getName() == "none") {
-		settings.filter = e.widget->getName();
+		if (e.widget->getName() == "lopass") settings.filter = Filter::LOPASS;
+		else if (e.widget->getName() == "hipass") settings.filter = Filter::HIPASS;
+		else settings.filter = Filter::FILTER_OFF;
 	} else if (e.widget->getName() == "POLYPHONIC") {
 		ofxUIToggle *toggle = (ofxUIToggle *) e.widget; 
-		settings.maxVoices = toggle->getValue() ? 16 : 1;
-		for (Voice &v : voices) v.pitch = 0;
+		settings.maxVoices = toggle->getValue() ? 8 : 1;
+		for (Voice &v : voices) v.pitch = 0; // reset voices
 	}
 }
 
-float Synth2804::convertMidiValue(float num, float newMin, float newMax) {
-	return (((num) * (newMax - newMin)) / (127)) + newMin;
+float Synth2804::convertMidiValue(float num, float oldMin, float oldMax) {
+	return (((num) * (oldMax - oldMin)) / (127)) + oldMin;
 }

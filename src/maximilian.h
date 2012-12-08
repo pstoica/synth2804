@@ -49,6 +49,9 @@ using namespace std;
 #endif
 #define TWOPI 6.283185307179586476925286766559
 
+enum class Wave { SINE, SAW, TRIANGLE, SQUARE, PULSE, NOISE };
+enum class Filter { FILTER_OFF, LOPASS, HIPASS };
+
 class maxiSettings {
 public:
 	static int sampleRate;
@@ -86,8 +89,7 @@ public:
 	double sinebuf(double frequency);
 	double sinebuf4(double frequency);
 	void phaseReset(double phaseIn);
-	double play(std::string fn, double frequency, double duty=0.2);
-	
+	double play(Wave fn, double frequency, double duty=0.2);	
 };
 
 

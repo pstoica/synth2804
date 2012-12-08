@@ -40,11 +40,8 @@ class Synth2804 : public ofBaseApp {
 
 		//------------------- maximilian
 
-		/*Synth2804() : adsrEnv{1,5,0.125,100,0.125,200,0,1000}, notes(0), maxVoices(16), polyphonic(true), mix(0), voice() { };*/
 		SynthSettings settings;
 		vector<Voice> voices;
 		int notes;
 		double mix;
-
-		maxiOsc test1;
 };
